@@ -1,5 +1,10 @@
 image: turchanskiy/bmstu-testing:0.2
 
+on:
+  push:
+    branches:
+      - main
+
 stages:
   - test
   - report
