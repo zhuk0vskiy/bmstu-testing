@@ -1,0 +1,14 @@
+jwt-key: '324mIOjkm34k677NkfsJf'
+
+database:
+  postgres:
+    host: 'localhost'
+    port: 5438
+    user: 'studios'
+    password: 'studios'
+    database: 'studios'
+    driver: 'postgres'
+
+logger:
+  level: 'error'
+  file: 'out.log'

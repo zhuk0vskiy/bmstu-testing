@@ -1,0 +1,1 @@
+insert into "user"(login, password, role, first_name, second_name, third_name) values ('test', 'test', 1, 'test', 'test', 'test')
