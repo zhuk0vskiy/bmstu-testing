@@ -1,0 +1,70 @@
+image: turchanskiy/bmstu-testing:0.2
+
+on:
+  push:
+    branches:
+      - main
+
+stages:
+  - test
+  - report
+
+unit-tests:
+  image: turchanskiy/bmstu-testing:0.2
+  stage: test
+  script:
+    - cd backend/src/tests
+    - go test .\service_test\ -v -json > testService.log
+    - go test .\repository_test\ -v -json > testRepository.log
+  artifacts:
+    paths:
+      - backend/src/tests/testService.log
+      - backend/svc/tests/testRepository.log
+
+int-tests:
+  image: turchanskiy/bmstu-testing:0.2
+  stage: test
+  script:
+    - cd backend/src/tests
+    - go test .\integration_test\ -v -json > testIntegration.log
+  dependencies:
+    - unit-tests
+  artifacts:
+    paths:
+      - backend/svc/tests/testIntegration.log
+
+e2e-tests:
+  image: turchanskiy/bmstu-testing:0.2
+  stage: test
+  script:
+    - cd backend/src/tests
+    - go test .\e2e_test\ -v -json > testE2E.log
+  dependencies:
+    - int-tests
+    - unit-tests
+  artifacts:
+    paths:
+      - backend/svc/tests/testE2E.log
+
+report:
+  image: turchanskiy/bmstu-testing:0.2
+  stage: report
+  needs:
+    - unit-tests
+    - int-tests
+    - e2e-tests
+  script:
+    - go get -u github.com/vakenbolt/go-test-report/
+    - go install github.com/vakenbolt/go-test-report/
+    - mv backend/svc/tests/testE2E.log testE2E.log
+    - mv backend/svc/tests/testService.log testService.log
+    - mv backend/svc/tests/testRepository.log testRepository.log
+    - mv backend/svc/tests/testIntegration.log testIntegration.log
+    - cat testService.log >> test.log
+    - cat testRepos.log >> test.log
+    - cat testIntegration.log >> test.log
+    - cat testE2E.log >> test.log
+    - cat test.log | go-test-report -o report.html
+  artifacts:
+    paths:
+      - report.html
