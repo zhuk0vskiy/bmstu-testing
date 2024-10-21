@@ -97,14 +97,10 @@ jobs:
           go get -u github.com/vakenbolt/go-test-report/
           go install github.com/vakenbolt/go-test-report/
           cd ..
-          mv backend/svc/tests/testE2E.log testE2E.log | true
-          mv backend/svc/tests/testService.log testService.log | true
-          mv backend/svc/tests/testRepository.log testRepository.log | true
-          mv backend/svc/tests/testIntegration.log testIntegration.log | true
-          cat testService.log >> test.log | true
-          cat testRepos.log >> test.log | true
-          cat testIntegration.log >> test.log | true
-          cat testE2E.log >> test.log | true
+          cat testService.log >> test.log || true
+          cat testRepos.log >> test.log || true
+          cat testIntegration.log >> test.log || true
+          cat testE2E.log >> test.log || true
           cat test.log | go-test-report -o report.html
 
 #      - name: Upload repository test logs
