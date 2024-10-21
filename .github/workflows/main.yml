@@ -35,7 +35,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
   run-unit-tests:
-    needs: build-and-push-image
+#    needs: build-and-push-image
     name: Run unit tests
     runs-on: ubuntu-latest
     container:
@@ -46,9 +46,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: run-unit-tests
+      - name: Run unit tests
         run:
-          sudo systemctl dockerd
+          systemctl dockerd
           cd backend/src/tests
           go test ./e2e_test/ -v -json > testE2e.log
 #          go test ./repository_test/ -v -json > testRepository.log
