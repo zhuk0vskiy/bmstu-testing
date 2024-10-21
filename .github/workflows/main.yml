@@ -35,6 +35,39 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  run-unit-tests:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    container:
+      image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
+      options: --privileged
+    steps:
+      - name: run-unit-tests
+        run:
+          dockerd
+          cd backend/src/tests
+          go test ./e2e_test/ -v -json > testE2e.log
+#          go test ./repository_test/ -v -json > testRepository.log
+#      - name: Upload service test logs
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: testService
+#          path: testService.log
+#          retention-days: 7
+#      - name: Upload repository test logs
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: testService
+#          path: testService.log
+#          retention-days: 7
+      - name: Upload repository test logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: testE2e
+          path: testE2e.log
+          retention-days: 7
+
+
 
 #      - name: Set up Go
 #        uses: actions/setup-go@v4
