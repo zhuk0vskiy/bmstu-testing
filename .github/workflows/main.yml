@@ -47,6 +47,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Init config
         run: |
+          mkdir -p /github/home/.docker
           /bin/bash config.sh
           mv config.json /github/home/.docker
 
