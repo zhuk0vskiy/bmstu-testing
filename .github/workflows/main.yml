@@ -90,6 +90,7 @@ jobs:
 #      - shell: bash
       - name: Make report
         run: |
+          ls
           cd backend
           go get -u github.com/vakenbolt/go-test-report/
           go install github.com/vakenbolt/go-test-report/
