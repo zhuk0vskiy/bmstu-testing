@@ -5,7 +5,6 @@ on: [push]
 permissions:
   contents: write
 
-
 jobs:
   build-and-push-image:
     name: Push Docker image to Docker Hub
@@ -42,6 +41,9 @@ jobs:
       image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
       options: --privileged
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: run-unit-tests
         run:
           dockerd
