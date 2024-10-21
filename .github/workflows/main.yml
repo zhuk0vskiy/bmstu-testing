@@ -71,7 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: testService
-          path: testService.log
+          path: backend/src/tests/service_test/testService.log
           retention-days: 7
 
 #  make-report:
