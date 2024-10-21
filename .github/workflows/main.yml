@@ -97,6 +97,7 @@ jobs:
           go get -u github.com/vakenbolt/go-test-report/
           go install github.com/vakenbolt/go-test-report/
           cd ..
+          touch test.log
           cat testService.log >> test.log || true
           cat testRepos.log >> test.log || true
           cat testIntegration.log >> test.log || true
