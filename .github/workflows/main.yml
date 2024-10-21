@@ -83,8 +83,6 @@ jobs:
       image: zhukovskiy/bmstu-testing
         #      options: --privileged
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
       - name: Make report
         uses: actions/download-artifact@v4
         with:
