@@ -35,7 +35,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
   run-unit-tests:
-    needs: build-and-push-image
+#    needs: build-and-push-image
     name: Run unit tests
     runs-on: ubuntu-latest
     container:
@@ -45,11 +45,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      - name: Init config
+        run: |
+          - /bin/bash config.sh
+          - mv config.json /github/home/.docker
 
       - name: Run unit tests
         run: |
-          cd backend/src/tests/integration_test
-          go test . -v
+          cd backend/src/tests/integration_test && go test . -v
 #          go test ./repository_test/ -v -json > testRepository.log
 #      - name: Upload service test logs
 #        uses: actions/upload-artifact@v4
