@@ -38,7 +38,8 @@ jobs:
     name: Run unit tests
     runs-on: ubuntu-latest
     container:
-      image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
+#      image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
+      image: zhukovskiy/bmstu-testing
       options: --privileged
     steps:
       - name: Checkout repo
