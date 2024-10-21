@@ -1,70 +1,77 @@
-image: turchanskiy/bmstu-testing:0.2
+name: Go tests
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
-stages:
-  - test
-  - report
+permissions:
+  contents: write
 
-unit-tests:
-  image: turchanskiy/bmstu-testing:0.2
-  stage: test
-  script:
-    - cd backend/src/tests
-    - go test .\service_test\ -v -json > testService.log
-    - go test .\repository_test\ -v -json > testRepository.log
-  artifacts:
-    paths:
-      - backend/src/tests/testService.log
-      - backend/svc/tests/testRepository.log
+jobs:
+  build-and-push-image:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-int-tests:
-  image: turchanskiy/bmstu-testing:0.2
-  stage: test
-  script:
-    - cd backend/src/tests
-    - go test .\integration_test\ -v -json > testIntegration.log
-  dependencies:
-    - unit-tests
-  artifacts:
-    paths:
-      - backend/svc/tests/testIntegration.log
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-e2e-tests:
-  image: turchanskiy/bmstu-testing:0.2
-  stage: test
-  script:
-    - cd backend/src/tests
-    - go test .\e2e_test\ -v -json > testE2E.log
-  dependencies:
-    - int-tests
-    - unit-tests
-  artifacts:
-    paths:
-      - backend/svc/tests/testE2E.log
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
+          tags: latest
+          labels: latest
 
-report:
-  image: turchanskiy/bmstu-testing:0.2
-  stage: report
-  needs:
-    - unit-tests
-    - int-tests
-    - e2e-tests
-  script:
-    - go get -u github.com/vakenbolt/go-test-report/
-    - go install github.com/vakenbolt/go-test-report/
-    - mv backend/svc/tests/testE2E.log testE2E.log
-    - mv backend/svc/tests/testService.log testService.log
-    - mv backend/svc/tests/testRepository.log testRepository.log
-    - mv backend/svc/tests/testIntegration.log testIntegration.log
-    - cat testService.log >> test.log
-    - cat testRepos.log >> test.log
-    - cat testIntegration.log >> test.log
-    - cat testE2E.log >> test.log
-    - cat test.log | go-test-report -o report.html
-  artifacts:
-    paths:
-      - report.html
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+#      - name: Set up Go
+#        uses: actions/setup-go@v4
+#        with:
+#          go-version: '1.22.0'
+#
+#      - name: Run unit tests
+#        run: make ci-unit -i
+#
+#      - name: Run integration tests
+#        run: make ci-integration -i
+#
+#      - name: Run E2E tests
+#        run: make ci-e2e -i
+#
+#      - name: Processing report data
+#        run: make ci-concat-reports
+#
+#      - name: Load test report history
+#        uses: actions/checkout@v3
+#        if: always()
+#        continue-on-error: true
+#        with:
+#          ref: gh-pages
+#          path: gh-pages
+#
+#      - name: Build test report
+#        uses: simple-elf/allure-report-action@v1.7
+#        if: always()
+#        with:
+#          gh_pages: gh-pages
+#          allure_history: allure-history
+#          allure_results: allure-results
+#
+#      - name: Publish test report
+#        uses: peaceiris/actions-gh-pages@v3
+#        if: always()
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_branch: gh-pages
+#          publish_dir: allure-history
