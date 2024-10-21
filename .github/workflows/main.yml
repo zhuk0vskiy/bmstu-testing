@@ -47,8 +47,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Init config
         run: |
-          - /bin/bash config.sh
-          - mv config.json /github/home/.docker
+          /bin/bash config.sh
+          mv config.json /github/home/.docker
 
       - name: Run unit tests
         run: |
