@@ -96,9 +96,8 @@ jobs:
           cd backend
           go get -u github.com/vakenbolt/go-test-report/
           go install github.com/vakenbolt/go-test-report/
-          cd ..
           touch test.log
-          cat testService.log >> test.log
+          cat ../testService.log >> test.log
           cat test.log
           cat test.log | go-test-report -o report.html
 
