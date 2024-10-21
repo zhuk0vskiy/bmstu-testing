@@ -66,7 +66,7 @@ func createContainer(ctx context.Context) (testcontainers.Container, *pgxpool.Po
 
 	req := testcontainers.GenericContainerRequest{
 		ContainerRequest: testcontainers.ContainerRequest{
-			Image:        "postgres:14-alpine",
+			Image:        "postgres:12-alpine",
 			ExposedPorts: []string{port},
 			Env:          env,
 			WaitingFor:   wait.ForLog("database system is ready to accept connections"),
