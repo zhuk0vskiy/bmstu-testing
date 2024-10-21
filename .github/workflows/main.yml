@@ -85,11 +85,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Download testService
+      - name: Make report
         uses: actions/download-artifact@v4
         with:
           name: testService
-      - name: Make report
         run: |
           cd backend
           go get -u github.com/vakenbolt/go-test-report/
