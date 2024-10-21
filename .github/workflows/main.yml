@@ -87,7 +87,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: testService
-        shell: bash
+      - shell: bash
         run: |
           cd backend
           go get -u github.com/vakenbolt/go-test-report/
