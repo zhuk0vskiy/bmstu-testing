@@ -75,7 +75,7 @@ jobs:
           retention-days: 7
 
   make-report:
-#    needs: run-unit-tests
+    needs: run-unit-tests
     name: Make report
     runs-on: ubuntu-latest
     container:
@@ -83,11 +83,12 @@ jobs:
       image: zhukovskiy/bmstu-testing
         #      options: --privileged
     steps:
-      - name: Make report
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: testService
+      - name: Download test service log
+        uses: actions/download-artifact@v4
+        with:
+          name: testService
 #      - shell: bash
+      - name: Make report
         run: |
           cd backend
           go get -u github.com/vakenbolt/go-test-report/
