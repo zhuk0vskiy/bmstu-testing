@@ -1,4 +1,4 @@
-*.aux
+c*.aux
 *.bcf
 *.blg
 *.log
