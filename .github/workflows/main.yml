@@ -74,45 +74,34 @@ jobs:
           path: testE2e.log
           retention-days: 7
 
+  make-report:
+    needs: run-unit-tests
+    name: Make report
+    runs-on: ubuntu-latest
+    container:
+      #      image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
+      image: zhukovskiy/bmstu-testing
+        #      options: --privileged
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Make report
+        run: |
+          go get -u github.com/vakenbolt/go-test-report/
+          go install github.com/vakenbolt/go-test-report/
+          mv backend/svc/tests/testE2E.log testE2E.log | true
+          mv backend/svc/tests/testService.log testService.log | true
+          mv backend/svc/tests/testRepository.log testRepository.log | true
+          mv backend/svc/tests/testIntegration.log testIntegration.lo g | true
+          cat testService.log >> test.log | true
+          cat testRepos.log >> test.log | true
+          cat testIntegration.log >> test.log | true
+          cat testE2E.log >> test.log | true
+          cat test.log | go-test-report -o report.html | true
 
-
-#      - name: Set up Go
-#        uses: actions/setup-go@v4
-#        with:
-#          go-version: '1.22.0'
-#
-#      - name: Run unit tests
-#        run: make ci-unit -i
-#
-#      - name: Run integration tests
-#        run: make ci-integration -i
-#
-#      - name: Run E2E tests
-#        run: make ci-e2e -i
-#
-#      - name: Processing report data
-#        run: make ci-concat-reports
-#
-#      - name: Load test report history
-#        uses: actions/checkout@v3
-#        if: always()
-#        continue-on-error: true
-#        with:
-#          ref: gh-pages
-#          path: gh-pages
-#
-#      - name: Build test report
-#        uses: simple-elf/allure-report-action@v1.7
-#        if: always()
-#        with:
-#          gh_pages: gh-pages
-#          allure_history: allure-history
-#          allure_results: allure-results
-#
-#      - name: Publish test report
-#        uses: peaceiris/actions-gh-pages@v3
-#        if: always()
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          publish_branch: gh-pages
-#          publish_dir: allure-history
+      - name: Upload repository test logs
+        uses: actions/download-artifact@v2
+        with:
+          name: report
+          path: report.html
+          retention-days: 7
