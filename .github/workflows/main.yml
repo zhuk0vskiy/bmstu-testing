@@ -41,7 +41,7 @@ jobs:
     container:
 #      image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
       image: zhukovskiy/bmstu-testing
-      options: --privileged
+#      options: --privileged
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
