@@ -53,7 +53,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-          cd backend/src/tests/integration_test && go test . -v
+          cd backend/src/tests/service_test && go test . -v
 #          go test ./repository_test/ -v -json > testRepository.log
 #      - name: Upload service test logs
 #        uses: actions/upload-artifact@v4
