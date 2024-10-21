@@ -98,7 +98,8 @@ jobs:
           go install github.com/vakenbolt/go-test-report/
           cd ..
           touch test.log
-          cat testService.log >> test.log || true
+          cat testService.log >> test.log
+          cat test.log
           cat test.log | go-test-report -o report.html
 
 #      - name: Upload repository test logs
