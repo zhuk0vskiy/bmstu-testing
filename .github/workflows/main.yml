@@ -35,7 +35,7 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
   run-unit-tests:
-    needs: build-and-push-image
+#    needs: build-and-push-image
     name: Run unit tests
     runs-on: ubuntu-latest
     container:
@@ -74,34 +74,34 @@ jobs:
           path: backend/src/tests/service_test/testService.log
           retention-days: 7
 
-#  make-report:
+  make-report:
 #    needs: run-unit-tests
-#    name: Make report
-#    runs-on: ubuntu-latest
-#    container:
+    name: Make report
+    runs-on: ubuntu-latest
+    container:
       #      image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
-#      image: zhukovskiy/bmstu-testing
+      image: zhukovskiy/bmstu-testing
         #      options: --privileged
-#    steps:
-#      - name: Make report
+    steps:
+      - name: Make report
 #        uses: actions/download-artifact@v4
 #        with:
 #          name: testService
 #      - shell: bash
-#        run: |
-#          cd backend
-#          go get -u github.com/vakenbolt/go-test-report/
-#          go install github.com/vakenbolt/go-test-report/
-#          cd ..
-#          mv backend/svc/tests/testE2E.log testE2E.log | true
-#          mv backend/svc/tests/testService.log testService.log | true
-#          mv backend/svc/tests/testRepository.log testRepository.log | true
-#          mv backend/svc/tests/testIntegration.log testIntegration.lo g | true
-#          cat testService.log >> test.log | true
-#          cat testRepos.log >> test.log | true
-#          cat testIntegration.log >> test.log | true
-#          cat testE2E.log >> test.log | true
-#          cat test.log | go-test-report -o report.html
+        run: |
+          cd backend
+          go get -u github.com/vakenbolt/go-test-report/
+          go install github.com/vakenbolt/go-test-report/
+          cd ..
+          mv backend/svc/tests/testE2E.log testE2E.log | true
+          mv backend/svc/tests/testService.log testService.log | true
+          mv backend/svc/tests/testRepository.log testRepository.log | true
+          mv backend/svc/tests/testIntegration.log testIntegration.lo g | true
+          cat testService.log >> test.log | true
+          cat testRepos.log >> test.log | true
+          cat testIntegration.log >> test.log | true
+          cat testE2E.log >> test.log | true
+          cat test.log | go-test-report -o report.html
 
 #      - name: Upload repository test logs
 #        uses: actions/download-artifact@v4
