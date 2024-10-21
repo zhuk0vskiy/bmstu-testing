@@ -48,7 +48,6 @@ jobs:
 
       - name: Run unit tests
         run: |
-#          systemctl dockerd
           cd backend/src/tests
           go test ./e2e_test/ -v -json > testE2e.log
 #          go test ./repository_test/ -v -json > testRepository.log
