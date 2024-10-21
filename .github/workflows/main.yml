@@ -99,9 +99,9 @@ jobs:
           cd ..
           touch test.log
           cat testService.log >> test.log || true
-          cat testRepos.log >> test.log || true
-          cat testIntegration.log >> test.log || true
-          cat testE2E.log >> test.log || true
+#          cat testRepos.log >> test.log || true
+#          cat testIntegration.log >> test.log || true
+#          cat testE2E.log >> test.log || true
           cat test.log | go-test-report -o report.html
 
 #      - name: Upload repository test logs
