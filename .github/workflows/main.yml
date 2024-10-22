@@ -95,7 +95,7 @@ jobs:
         continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
-          name: testService
+          name: testE2e
           path: backend/src/tests/e2e_test/testE2e.log
           retention-days: 7
 
@@ -106,26 +106,36 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22.0'
+
       - name: Download unit-service test log
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
           name: testService
+
       - name: Download unit-repository test log
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
           name: testRepository
+
       - name: Download integration test log
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
           name: testIntegration
+
       - name: Download e2e test log
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
           name: testE2e
+
       - name: Make report
         run: |
           ls
