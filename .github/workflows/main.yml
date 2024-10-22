@@ -111,9 +111,10 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.22.0'
+
+      - name: Install dependencies
         run:
           cd backend && go mod tidy
-
 
       - name: Download unit-service test log
         uses: actions/download-artifact@v4
