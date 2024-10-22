@@ -66,10 +66,13 @@ jobs:
         run: |
           cd backend/src/tests/integration_test && go test . -v -json > testIntegration.log
 
+      - name: Set up for e2e tests
+        run: |
+          docker run -p 5438:5432 -e POSTGRES_USER=studios -e POSTGRES_PASSWORD=studios -e POSTGRES_DB=studios -d postgres:14-alpine
+
       - name: Run e2e tests
         continue-on-error: true
         run: |
-          docker run -p 5438:5432 -e POSTGRES_USER=studios -e POSTGRES_PASSWORD=studios -e POSTGRES_DB=studios -d postgres:14-alpine
           cd backend/src/tests/e2e_tests && go test . -v -json > testE2e.log
 
       - name: Upload unit-service test logs
