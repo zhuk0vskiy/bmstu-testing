@@ -69,6 +69,7 @@ jobs:
       - name: Run e2e tests
         continue-on-error: true
         run: |
+          docker run postgres:14-alpine -p 5438:5432
           cd backend/src/tests/e2e_tests && go test . -v -json > testE2e.log
 
       - name: Upload unit-service test logs
