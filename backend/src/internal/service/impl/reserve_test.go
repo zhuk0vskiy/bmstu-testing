@@ -54,7 +54,7 @@ func TestReserveService_Add(t *testing.T) {
 					EquipmentId:       []int64{1, 2, 3},
 					ProducerId:        1,
 					InstrumentalistId: 1,
-					TimeInterval: &model.TimeInterval{
+					TimeInterval: model.TimeInterval{
 						StartTime: time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 						EndTime:   time.Date(2024, 4, 14, 13, 0, 0, 0, time.UTC),
 					},
@@ -72,7 +72,7 @@ func TestReserveService_Add(t *testing.T) {
 					EquipmentId:       []int64{1, 2, 3},
 					ProducerId:        1,
 					InstrumentalistId: 1,
-					TimeInterval: &model.TimeInterval{
+					TimeInterval: model.TimeInterval{
 						StartTime: time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 						EndTime:   time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 					},
@@ -90,7 +90,7 @@ func TestReserveService_Add(t *testing.T) {
 					EquipmentId:       []int64{1, 2, 3},
 					ProducerId:        1,
 					InstrumentalistId: 1,
-					TimeInterval: &model.TimeInterval{
+					TimeInterval: model.TimeInterval{
 						StartTime: time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 						EndTime:   time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 					},
@@ -108,7 +108,7 @@ func TestReserveService_Add(t *testing.T) {
 					EquipmentId:       nil,
 					ProducerId:        1,
 					InstrumentalistId: 1,
-					TimeInterval: &model.TimeInterval{
+					TimeInterval: model.TimeInterval{
 						StartTime: time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 						EndTime:   time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 					},
@@ -126,7 +126,7 @@ func TestReserveService_Add(t *testing.T) {
 					EquipmentId:       []int64{1, 2, 3},
 					ProducerId:        0,
 					InstrumentalistId: 1,
-					TimeInterval: &model.TimeInterval{
+					TimeInterval: model.TimeInterval{
 						StartTime: time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 						EndTime:   time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 					},
@@ -144,7 +144,7 @@ func TestReserveService_Add(t *testing.T) {
 					EquipmentId:       []int64{1, 2, 3},
 					ProducerId:        1,
 					InstrumentalistId: 0,
-					TimeInterval: &model.TimeInterval{
+					TimeInterval: model.TimeInterval{
 						StartTime: time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 						EndTime:   time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 					},
@@ -161,7 +161,7 @@ func TestReserveService_Add(t *testing.T) {
 					EquipmentId:       []int64{1, 2, 3},
 					ProducerId:        1,
 					InstrumentalistId: 1,
-					TimeInterval: &model.TimeInterval{
+					TimeInterval: model.TimeInterval{
 						StartTime: time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 						EndTime:   time.Date(2024, 4, 14, 12, 0, 0, 0, time.UTC),
 					},

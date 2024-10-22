@@ -46,6 +46,12 @@ func (s UserService) GetReserves(request *dto.GetUserReservesRequest) (reserves 
 		Id: request.Id,
 	})
 
+	//var reserveExt []model.ReserveExt
+	//
+	//for reserve := range reserves {
+	//	equipmnetsId, err = s.
+	//}
+
 	if err != nil {
 		s.logger.Errorf("ошибка get user %d reserves: %s", request.Id, fmt.Errorf("получение всех броней: %w", err))
 		return nil, fmt.Errorf("получение всех броней: %w", err)

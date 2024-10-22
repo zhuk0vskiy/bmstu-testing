@@ -4,13 +4,13 @@ import (
 	"github.com/spf13/viper"
 )
 
-const configPath = "backend/src/config/config.yml"
+const configPath = "../../config/config.yml"
 
 type Config struct {
 	Logger   LoggerConfig   `yaml:"logger"`
 	HTTP     HTTPConfig     `yaml:"http"`
 	Database DatabaseConfig `yaml:"database"`
-	JwtKey   string         `yaml:"jwt-key"`
+	JwtKey   string         `yaml:"JwtKey"`
 }
 
 type LoggerConfig struct {

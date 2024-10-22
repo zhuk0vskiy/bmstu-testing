@@ -3,10 +3,11 @@ package _interface
 import (
 	"backend/src/internal/model"
 	"backend/src/internal/model/dto"
+	"context"
 )
 
 type IValidateTimeService interface {
-	GetSuitableStuff(request *dto.GetSuitableStuffRequest) (
+	GetSuitableStuff(ctx context.Context, request *dto.GetSuitableStuffRequest) (
 		[]*model.Room,
 		[][]*model.Equipment,
 		[]*model.Producer,

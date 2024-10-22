@@ -138,7 +138,7 @@ func (s InstrumentalistService) Update(request *dto.UpdateInstrumentalistRequest
 	return err
 }
 
-func (s InstrumentalistService) Add(request *dto.AddInstrumentalistRequest) (err error) {
+func (s InstrumentalistService) Add(ctx context.Context, request *dto.AddInstrumentalistRequest) (err error) {
 
 	if request.Name == "" {
 		s.logger.Infof("ошибка add instrumentalist: %s", fmt.Errorf("пустое имя: %w", err))
@@ -163,7 +163,7 @@ func (s InstrumentalistService) Add(request *dto.AddInstrumentalistRequest) (err
 
 	//ctx, cancel := context.WithTimeout(context.Background(), cmd.TimeOut*time.Second)
 	//defer cancel()
-	ctx := context.Background()
+	ctx = context.Background()
 	err = s.instrumentalistRepo.Add(ctx, &dto.AddInstrumentalistRequest{
 		Name:      request.Name,
 		StudioId:  request.StudioId,

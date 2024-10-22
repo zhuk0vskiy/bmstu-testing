@@ -6,11 +6,11 @@ const (
 )
 
 type User struct {
-	Id         int64
-	Login      string
-	Password   string
-	Role       string
-	FirstName  string
-	SecondName string
-	ThirdName  string
+	Id         int64  `json:"id"`
+	Login      string `json:"login"`
+	Password   string `json:"password"`
+	Role       string `json:"role"`
+	FirstName  string `json:"first_name"`
+	SecondName string `json:"second_name"`
+	ThirdName  string `json:"third_name"`
 }

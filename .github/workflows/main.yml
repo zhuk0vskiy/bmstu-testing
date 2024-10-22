@@ -96,7 +96,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: testE2e
-          path: backend/src/tests/e2e_test/testE2e.log
+          path: backend/src/tests/old_e2e_test/testE2e.log
           retention-days: 7
 
   make-report:

@@ -11,16 +11,25 @@ import (
 )
 
 type ReserveService struct {
-	reserveRepo repositoryInterface.IReserveRepository
-	logger      logger.Interface
+	reserveRepo         repositoryInterface.IReserveRepository
+	producerRepo        repositoryInterface.IProducerRepository
+	InstrumentalistRepo repositoryInterface.IInstrumentalistRepository
+	roomRepo            repositoryInterface.IRoomRepository
+	logger              logger.Interface
 }
 
 func NewReserveService(
 	logger logger.Interface,
-	reserveRepo repositoryInterface.IReserveRepository) serviceInterface.IReserveService {
+	reserveRepo repositoryInterface.IReserveRepository,
+	roomRepo repositoryInterface.IRoomRepository,
+	producerRepo repositoryInterface.IProducerRepository,
+	instrumentalistRepo repositoryInterface.IInstrumentalistRepository) serviceInterface.IReserveService {
 	return &ReserveService{
-		logger:      logger,
-		reserveRepo: reserveRepo,
+		logger:              logger,
+		reserveRepo:         reserveRepo,
+		producerRepo:        producerRepo,
+		InstrumentalistRepo: instrumentalistRepo,
+		roomRepo:            roomRepo,
 	}
 }
 
@@ -38,7 +47,7 @@ func (s ReserveService) GetAll(request *dto.GetAllReserveRequest) (equipments []
 	return equipments, err
 }
 
-func (s ReserveService) Add(request *dto.AddReserveRequest) (err error) {
+func (s ReserveService) Add(ctx context.Context, request *dto.AddReserveRequest) (err error) {
 
 	if request.ProducerId < 0 {
 		s.logger.Infof("ошибка add reserve: %s", fmt.Errorf("id продюсера меньше 0: %w", err))
@@ -73,9 +82,38 @@ func (s ReserveService) Add(request *dto.AddReserveRequest) (err error) {
 		return fmt.Errorf("время начала больше времени конца: %w", err)
 	}
 
+	room, err := s.roomRepo.Get(ctx, &dto.GetRoomRequest{
+		Id: request.RoomId,
+	})
+	if err != nil {
+		return fmt.Errorf("%w", err)
+	}
+	if room.StartHour > int64(request.TimeInterval.StartTime.Hour()) || room.EndHour < int64(request.TimeInterval.EndTime.Hour()) {
+		return fmt.Errorf("выбранное время не входит во время комнаты")
+	}
+
+	producer, err := s.producerRepo.Get(ctx, &dto.GetProducerRequest{
+		Id: request.ProducerId,
+	})
+	if err != nil {
+		return fmt.Errorf("%w", err)
+	}
+	if producer.StartHour > int64(request.TimeInterval.StartTime.Hour()) || producer.EndHour < int64(request.TimeInterval.EndTime.Hour()) {
+		return fmt.Errorf("выбранное время не входит во время продюсера")
+	}
+
+	instrumentalist, err := s.InstrumentalistRepo.Get(ctx, &dto.GetInstrumentalistRequest{
+		Id: request.InstrumentalistId,
+	})
+	if err != nil {
+		return fmt.Errorf("%w", err)
+	}
+	if instrumentalist.StartHour > int64(request.TimeInterval.StartTime.Hour()) || instrumentalist.EndHour < int64(request.TimeInterval.EndTime.Hour()) {
+		return fmt.Errorf("выбранное время не входит во время инструменталиста")
+	}
+
 	//ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	//defer cancel()
-	ctx := context.Background()
 	err = s.reserveRepo.Add(ctx, &dto.AddReserveRequest{
 		UserId:            request.UserId,
 		RoomId:            request.RoomId,

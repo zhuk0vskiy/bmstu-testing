@@ -41,7 +41,7 @@ func NewValidateTimeService(
 	}
 }
 
-func (s ValidateTimeService) GetSuitableStuff(request *dto.GetSuitableStuffRequest) (
+func (s ValidateTimeService) GetSuitableStuff(ctx context.Context, request *dto.GetSuitableStuffRequest) (
 	notReservedRooms []*model.Room,
 	notReservedEquipments [][]*model.Equipment,
 	notReservedProducers []*model.Producer,
@@ -53,7 +53,7 @@ func (s ValidateTimeService) GetSuitableStuff(request *dto.GetSuitableStuffReque
 		return nil, nil, nil, nil, fmt.Errorf("id студии меньше 1")
 	}
 
-	ctx := context.Background() //, cancel := context.WithTimeout(context.Background(), cmd.TimeOut*time.Second)
+	//ctx := context.Background() //, cancel := context.WithTimeout(context.Background(), cmd.TimeOut*time.Second)
 	//defer cancel()
 	notReservedRooms, err = s.getNotReservedRooms(ctx, &dto.GetNotReservedRoomsRequest{
 		ChoosenInterval: request.TimeInterval,

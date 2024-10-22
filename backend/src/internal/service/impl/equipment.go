@@ -69,7 +69,7 @@ func (s EquipmentService) Get(request *dto.GetEquipmentRequest) (equipment *mode
 	return equipment, err
 }
 
-func (s EquipmentService) Add(request *dto.AddEquipmentRequest) (err error) {
+func (s EquipmentService) Add(ctx context.Context, request *dto.AddEquipmentRequest) (err error) {
 
 	if request.Name == "" {
 		s.logger.Infof("ошибка add equipment %s %d %d: %s", request.Name, request.Type, request.StudioId, fmt.Errorf("пустое название: %w", err))
@@ -88,7 +88,7 @@ func (s EquipmentService) Add(request *dto.AddEquipmentRequest) (err error) {
 
 	//ctx, cancel := context.WithTimeout(context.Background(), cmd.TimeOut*time.Second)
 	//defer cancel()
-	ctx := context.Background()
+	ctx = context.Background()
 	err = s.equipmentRepo.Add(ctx, &dto.AddEquipmentRequest{
 		Name:     request.Name,
 		StudioId: request.StudioId,

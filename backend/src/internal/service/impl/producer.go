@@ -125,7 +125,7 @@ func (s ProducerService) Update(request *dto.UpdateProducerRequest) (err error) 
 	return err
 }
 
-func (s ProducerService) Add(request *dto.AddProducerRequest) (err error) {
+func (s ProducerService) Add(ctx context.Context, request *dto.AddProducerRequest) (err error) {
 
 	if request.Name == "" {
 		s.logger.Infof("ошибка add producer: %s", fmt.Errorf("пустое имя: %w", err))
@@ -148,7 +148,6 @@ func (s ProducerService) Add(request *dto.AddProducerRequest) (err error) {
 		return fmt.Errorf("время конца/начала работы не входит в размер суток (от 00 до 23)")
 	}
 
-	ctx := context.Background() //, cancel := context.WithTimeout(context.Background(), cmd.TimeOut*time.Second)
 	//defer cancel()
 	err = s.producerRepo.Add(ctx, &dto.AddProducerRequest{
 		Name:      request.Name,

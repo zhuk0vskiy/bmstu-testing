@@ -1,4 +1,4 @@
-jwt-key: '324mIOjkm34k677NkfsJf'
+JwtKey: '324mIOjkm34k677NkfsJf'
 
 database:
   postgres:

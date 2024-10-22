@@ -115,7 +115,7 @@ func (s RoomService) Update(request *dto.UpdateRoomRequest) (err error) {
 	return err
 }
 
-func (s RoomService) Add(request *dto.AddRoomRequest) (err error) {
+func (s RoomService) Add(ctx context.Context, request *dto.AddRoomRequest) (err error) {
 
 	if request.Name == "" {
 		return fmt.Errorf("пустое название: %w", err)
@@ -125,7 +125,7 @@ func (s RoomService) Add(request *dto.AddRoomRequest) (err error) {
 		return fmt.Errorf("id комнаты меньше 0")
 	}
 
-	if request.StartHour == request.EndHour {
+	if request.StartHour >= request.EndHour {
 		return fmt.Errorf("время начала работы равно времени конца")
 	}
 
@@ -136,7 +136,6 @@ func (s RoomService) Add(request *dto.AddRoomRequest) (err error) {
 
 	//ctx, cancel := context.WithTimeout(context.Background(), cmd.TimeOut*time.Second)
 	//defer cancel()
-	ctx := context.Background()
 	err = s.roomRepo.Add(ctx, &dto.AddRoomRequest{
 		Name:      request.Name,
 		StudioId:  request.StudioId,

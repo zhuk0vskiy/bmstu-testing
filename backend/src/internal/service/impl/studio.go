@@ -84,7 +84,7 @@ func (s StudioService) GetAll(request *dto.GetStudioAllRequest) (studios []*mode
 	return studios, err
 }
 
-func (s StudioService) Add(request *dto.AddStudioRequest) (err error) {
+func (s StudioService) Add(ctx context.Context, request *dto.AddStudioRequest) (err error) {
 
 	if request.Name == "" {
 		s.logger.Infof("ошибка add studio: %s", fmt.Errorf("пустое имя: %w", err))
@@ -93,7 +93,7 @@ func (s StudioService) Add(request *dto.AddStudioRequest) (err error) {
 
 	//ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	//defer cancel()
-	ctx := context.Background()
+
 	err = s.studioRepo.Add(ctx, &dto.AddStudioRequest{
 		Name: request.Name,
 	})

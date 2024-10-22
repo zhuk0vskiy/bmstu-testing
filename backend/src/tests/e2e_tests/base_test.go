@@ -1,4 +1,4 @@
-package tests
+package e2e_tests
 
 import (
 	"log"
@@ -6,15 +6,11 @@ import (
 	"testing"
 )
 
-func fillTestTables() error {
-	return nil
-}
-
 func TestMain(m *testing.M) {
 	testDB := SetupTestDatabase()
 	defer testDB.TearDown()
-	testDbInstance = testDB.DbInstance
-	err := SeedTestData(testDbInstance)
+	TestDbInstance = testDB.DbInstance
+	err := SeedTestData(TestDbInstance)
 	if err != nil {
 		log.Fatalln(err)
 	}

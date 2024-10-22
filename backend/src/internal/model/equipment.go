@@ -1,10 +1,10 @@
 package model
 
 type Equipment struct {
-	Id            int64
-	Name          string
-	EquipmentType int64
-	StudioId      int64
+	Id            int64  `json:"id"`
+	Name          string `json:"name"`
+	EquipmentType int64  `json:"equipment_type"`
+	StudioId      int64  `json:"studio_id"`
 }
 
 // TODO: изменить на что-то типо enum
@@ -13,10 +13,10 @@ const (
 
 	Microphones = 1
 	Instruments = 2
-	Headphones  = 3
-	Monitors    = 4
-	Cabels      = 5
-	Stations    = 6
+	//Headphones  = 3
+	//Monitors    = 4
+	//Cabels      = 5
+	//Stations    = 6
 
-	OutOfLastEquipment = 7 // для удобства проверки в логике
+	OutOfLastEquipment = 3 // для удобства проверки в логике
 )

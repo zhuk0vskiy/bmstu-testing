@@ -7,6 +7,7 @@ import (
 	"backend/src/pkg/logger"
 	"context"
 	"fmt"
+	"strconv"
 )
 
 type AuthService struct {
@@ -82,7 +83,7 @@ func (s AuthService) SignIn(request *dto.SignInRequest) (err error) {
 	return err
 }
 
-func (s AuthService) LogIn(request *dto.LogInRequest) (token string, err error) {
+func (s AuthService) LogIn(ctx context.Context, request *dto.LogInRequest) (token string, err error) {
 	if request.Login == "" {
 		s.logger.Infof("ошибка при входе пользователя: %s", fmt.Errorf("должно быть указано имя пользователя"))
 		return "", fmt.Errorf("должно быть указано имя пользователя")
@@ -93,7 +94,7 @@ func (s AuthService) LogIn(request *dto.LogInRequest) (token string, err error) 
 		return "", fmt.Errorf("должен быть указан пароль")
 	}
 
-	ctx := context.Background() //, cancel := context.WithTimeout(context.Background(), cmd.TimeOut*time.Second)
+	//ctx := context.Background() //, cancel := context.WithTimeout(context.Background(), cmd.TimeOut*time.Second)
 	//defer cancel()
 	user, err := s.userRepo.GetByLogin(ctx, &dto.GetUserByLoginRequest{
 		Login: request.Login,
@@ -108,7 +109,9 @@ func (s AuthService) LogIn(request *dto.LogInRequest) (token string, err error) 
 		return "", fmt.Errorf("неверный пароль")
 	}
 
-	token, err = base.GenerateAuthToken(request.Login, s.jwtKey, user.Role)
+	userId := strconv.Itoa(int(user.Id))
+
+	token, err = base.GenerateAuthToken(userId, request.Login, s.jwtKey, user.Role)
 	if err != nil {
 		s.logger.Errorf("ошибка при регистрации пользователя %d: %s", user.Id, err.Error())
 		return "", fmt.Errorf("генерация токена: %w", err)
