@@ -170,7 +170,7 @@ func (suite *ProducerRepositorySuite) TestProducerAdd01(t provider.T) {
 		service := impl.NewProducerService(logger, producerRepo, reserveRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
-		err := service.Add(request)
+		err := service.Add(ctx, request)
 
 		sCtx.Assert().NoError(err)
 	})
@@ -199,7 +199,7 @@ func (suite *ProducerRepositorySuite) TestProducerAdd02(t provider.T) {
 		service := impl.NewProducerService(logger, producerRepo, reserveRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
-		err := service.Add(request)
+		err := service.Add(ctx, request)
 
 		sCtx.Assert().Error(err)
 	})

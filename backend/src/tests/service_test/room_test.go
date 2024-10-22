@@ -166,7 +166,7 @@ func (suite *RoomSuite) TestRoomAdd01(t provider.T) {
 		service := impl.NewRoomService(roomRepo, reserveRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
-		err := service.Add(request)
+		err := service.Add(ctx, request)
 
 		sCtx.Assert().NoError(err)
 	})
@@ -193,7 +193,7 @@ func (suite *RoomSuite) TestRoomAdd02(t provider.T) {
 		service := impl.NewRoomService(roomRepo, reserveRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
-		err := service.Add(request)
+		err := service.Add(ctx, request)
 
 		sCtx.Assert().Error(err)
 	})

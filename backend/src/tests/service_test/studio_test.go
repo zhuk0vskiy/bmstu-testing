@@ -165,7 +165,7 @@ func (suite *StudioSuite) TestStudioAdd01(t provider.T) {
 		service := impl.NewStudioService(logger, studioRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
-		err := service.Add(request)
+		err := service.Add(ctx, request)
 
 		sCtx.Assert().NoError(err)
 	})
@@ -193,7 +193,7 @@ func (suite *StudioSuite) TestStudioAdd02(t provider.T) {
 		service := impl.NewStudioService(logger, studioRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
-		err := service.Add(request)
+		err := service.Add(ctx, request)
 
 		sCtx.Assert().Error(err)
 	})

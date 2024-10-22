@@ -15,7 +15,7 @@ func Test_Runner(t *testing.T) {
 	//db, ids := utils.NewTestStorage()
 	//defer utils.DropTestStorage(db)
 	//
-	tm, err := base.GenerateAuthToken("1", "2", "3")
+	tm, err := base.GenerateAuthToken("1", "2", "3", "1")
 	if err != nil {
 		panic(err)
 	}

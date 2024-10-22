@@ -187,7 +187,7 @@ func (suite *InstrumentalistSuite) TestInstrumentalistAdd01(t provider.T) {
 		service := impl.NewInstrumentalistService(logger, instrumentalistRepo, reserveRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
-		err := service.Add(request)
+		err := service.Add(ctx, request)
 
 		sCtx.Assert().NoError(err)
 	})
@@ -216,7 +216,7 @@ func (suite *InstrumentalistSuite) TestInstrumentalistAdd02(t provider.T) {
 		service := impl.NewInstrumentalistService(logger, instrumentalistRepo, reserveRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
-		err := service.Add(request)
+		err := service.Add(ctx, request)
 
 		sCtx.Assert().Error(err)
 	})

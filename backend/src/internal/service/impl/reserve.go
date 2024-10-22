@@ -82,35 +82,35 @@ func (s ReserveService) Add(ctx context.Context, request *dto.AddReserveRequest)
 		return fmt.Errorf("время начала больше времени конца: %w", err)
 	}
 
-	room, err := s.roomRepo.Get(ctx, &dto.GetRoomRequest{
-		Id: request.RoomId,
-	})
-	if err != nil {
-		return fmt.Errorf("%w", err)
-	}
-	if room.StartHour > int64(request.TimeInterval.StartTime.Hour()) || room.EndHour < int64(request.TimeInterval.EndTime.Hour()) {
-		return fmt.Errorf("выбранное время не входит во время комнаты")
-	}
-
-	producer, err := s.producerRepo.Get(ctx, &dto.GetProducerRequest{
-		Id: request.ProducerId,
-	})
-	if err != nil {
-		return fmt.Errorf("%w", err)
-	}
-	if producer.StartHour > int64(request.TimeInterval.StartTime.Hour()) || producer.EndHour < int64(request.TimeInterval.EndTime.Hour()) {
-		return fmt.Errorf("выбранное время не входит во время продюсера")
-	}
-
-	instrumentalist, err := s.InstrumentalistRepo.Get(ctx, &dto.GetInstrumentalistRequest{
-		Id: request.InstrumentalistId,
-	})
-	if err != nil {
-		return fmt.Errorf("%w", err)
-	}
-	if instrumentalist.StartHour > int64(request.TimeInterval.StartTime.Hour()) || instrumentalist.EndHour < int64(request.TimeInterval.EndTime.Hour()) {
-		return fmt.Errorf("выбранное время не входит во время инструменталиста")
-	}
+	//room, err := s.roomRepo.Get(ctx, &dto.GetRoomRequest{
+	//	Id: request.RoomId,
+	//})
+	//if err != nil {
+	//	return fmt.Errorf("%w", err)
+	//}
+	//if room.StartHour > int64(request.TimeInterval.StartTime.Hour()) || room.EndHour < int64(request.TimeInterval.EndTime.Hour()) {
+	//	return fmt.Errorf("выбранное время не входит во время комнаты")
+	//}
+	//
+	//producer, err := s.producerRepo.Get(ctx, &dto.GetProducerRequest{
+	//	Id: request.ProducerId,
+	//})
+	//if err != nil {
+	//	return fmt.Errorf("%w", err)
+	//}
+	//if producer.StartHour > int64(request.TimeInterval.StartTime.Hour()) || producer.EndHour < int64(request.TimeInterval.EndTime.Hour()) {
+	//	return fmt.Errorf("выбранное время не входит во время продюсера")
+	//}
+	//
+	//instrumentalist, err := s.InstrumentalistRepo.Get(ctx, &dto.GetInstrumentalistRequest{
+	//	Id: request.InstrumentalistId,
+	//})
+	//if err != nil {
+	//	return fmt.Errorf("%w", err)
+	//}
+	//if instrumentalist.StartHour > int64(request.TimeInterval.StartTime.Hour()) || instrumentalist.EndHour < int64(request.TimeInterval.EndTime.Hour()) {
+	//	return fmt.Errorf("выбранное время не входит во время инструменталиста")
+	//}
 
 	//ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	//defer cancel()

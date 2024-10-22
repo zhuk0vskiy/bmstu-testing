@@ -46,7 +46,7 @@ func (suite *AuthSuite) TestAuthLogin01(t provider.T) {
 		service := impl.NewAuthService(logger, repo, crypto, suite.JwtKey)
 
 		sCtx.WithNewParameters("ctx", ctx, "request", userAuth)
-		token, err := service.LogIn(&dto.LogInRequest{Login: userAuth.Login, Password: userAuth.Password})
+		token, err := service.LogIn(ctx, &dto.LogInRequest{Login: userAuth.Login, Password: userAuth.Password})
 
 		sCtx.Assert().NoError(err)
 		sCtx.Assert().NotEmpty(token)
@@ -76,7 +76,7 @@ func (suite *AuthSuite) TestAuthLogin02(t provider.T) {
 		service := impl.NewAuthService(logger, repo, crypto, suite.JwtKey)
 
 		sCtx.WithNewParameters("ctx", ctx, "request", userAuth)
-		token, err := service.LogIn(&dto.LogInRequest{Login: userAuth.Login, Password: userAuth.Password})
+		token, err := service.LogIn(ctx, &dto.LogInRequest{Login: userAuth.Login, Password: userAuth.Password})
 
 		sCtx.Assert().Error(err)
 		sCtx.Assert().Empty(token)

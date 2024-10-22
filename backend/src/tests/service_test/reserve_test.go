@@ -27,6 +27,9 @@ func (suite *ReserveSuite) TestReserveAdd01(t provider.T) {
 		request := utils.ReserveFabric{Id: 1}.CorrectReserveAdd()
 
 		reserveRepo := new(mocks.IReserveRepository)
+		roomRepo := new(mocks.IRoomRepository)
+		producerRepo := new(mocks.IProducerRepository)
+		instrumentalistRepo := new(mocks.IInstrumentalistRepository)
 
 		reserveRepo.On("Add", ctx, request).Return(
 			nil,
@@ -34,10 +37,10 @@ func (suite *ReserveSuite) TestReserveAdd01(t provider.T) {
 
 		logger := utils.NewMockLogger()
 
-		service := impl.NewReserveService(logger, reserveRepo)
+		service := impl.NewReserveService(logger, reserveRepo, roomRepo, producerRepo, instrumentalistRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
-		err := service.Add(request)
+		err := service.Add(ctx, request)
 
 		sCtx.Assert().NoError(err)
 	})
@@ -54,6 +57,9 @@ func (suite *ReserveSuite) TestReserveAdd02(t provider.T) {
 		request := utils.ReserveFabric{Id: 1}.IncorrectReserveAdd()
 
 		reserveRepo := new(mocks.IReserveRepository)
+		roomRepo := new(mocks.IRoomRepository)
+		producerRepo := new(mocks.IProducerRepository)
+		instrumentalistRepo := new(mocks.IInstrumentalistRepository)
 
 		reserveRepo.On("Add", ctx, request).Return(
 			fmt.Errorf("failed to add"),
@@ -61,10 +67,10 @@ func (suite *ReserveSuite) TestReserveAdd02(t provider.T) {
 
 		logger := utils.NewMockLogger()
 
-		service := impl.NewReserveService(logger, reserveRepo)
+		service := impl.NewReserveService(logger, reserveRepo, roomRepo, producerRepo, instrumentalistRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
-		err := service.Add(request)
+		err := service.Add(ctx, request)
 
 		sCtx.Assert().Error(err)
 	})
@@ -94,6 +100,9 @@ func (suite *ReserveSuite) TestReserveGetAll01(t provider.T) {
 		}
 
 		reserveRepo := new(mocks.IReserveRepository)
+		roomRepo := new(mocks.IRoomRepository)
+		producerRepo := new(mocks.IProducerRepository)
+		instrumentalistRepo := new(mocks.IInstrumentalistRepository)
 
 		reserveRepo.On("GetAll", ctx, request).Return(
 			reserves, nil,
@@ -101,7 +110,7 @@ func (suite *ReserveSuite) TestReserveGetAll01(t provider.T) {
 
 		logger := utils.NewMockLogger()
 
-		service := impl.NewReserveService(logger, reserveRepo)
+		service := impl.NewReserveService(logger, reserveRepo, roomRepo, producerRepo, instrumentalistRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", request)
 
 		reserves, err := service.GetAll(request)

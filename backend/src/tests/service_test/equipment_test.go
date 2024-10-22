@@ -44,7 +44,7 @@ func (suite *EquipmentSuite) TestEquipmentAdd01(t provider.T) {
 
 		service := impl.NewEquipmentService(logger, equipmentRepo, reserveRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", equipmentAdd)
-		err := service.Add(&dto.AddEquipmentRequest{
+		err := service.Add(ctx, &dto.AddEquipmentRequest{
 			Name:     equipmentAdd.Name,
 			Type:     equipmentAdd.EquipmentType,
 			StudioId: equipmentAdd.StudioId,
@@ -83,7 +83,7 @@ func (suite *EquipmentSuite) TestEquipmentAdd03(t provider.T) {
 
 		service := impl.NewEquipmentService(logger, equipmentRepo, reserveRepo)
 		sCtx.WithNewParameters("ctx", ctx, "request", equipmentAdd)
-		err := service.Add(&dto.AddEquipmentRequest{
+		err := service.Add(ctx, &dto.AddEquipmentRequest{
 			Name:     equipmentAdd.Name,
 			Type:     equipmentAdd.EquipmentType,
 			StudioId: equipmentAdd.StudioId,
