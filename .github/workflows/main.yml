@@ -45,11 +45,11 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.22.0'
-      - name: Init config
-        run: |
-          mkdir -p /github/home/.docker
-          /bin/bash config.sh
-          mv config.json /github/home/.docker
+#      - name: Init config
+#        run: |
+#          mkdir -p /github/home/.docker
+#          /bin/bash config.sh
+#          mv config.json /github/home/.docker
 
       - name: Run unit tests
         run: |
