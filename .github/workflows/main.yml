@@ -45,51 +45,84 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.22.0'
-#      - name: Init config
-#        run: |
-#          mkdir -p /github/home/.docker
-#          /bin/bash config.sh
-#          mv config.json /github/home/.docker
 
-      - name: Run unit tests
+      - name: Run unit-service tests
+        continue-on-error: true
         run: |
-          cd backend/src/tests/e2e_test && go test . -v
-#          go test ./repository_test/ -v -json > testRepository.log
-#      - name: Upload service test logs
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: testService
-#          path: testService.log
-#          retention-days: 7
-#      - name: Upload repository test logs
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: testService
-#          path: testService.log
-#          retention-days: 7
-      - name: Upload repository test logs
+          cd backend/src/tests/servivce_test && go test . -v -json > testService.log
+
+      - name: Run unit-repository tests
+        continue-on-error: true
+        run: |
+          cd backend/src/tests/repository_test && go test . -v -json > testRepository.log
+
+      - name: Run integration tests
+        continue-on-error: true
+        run: |
+          cd backend/src/tests/integration_test && go test . -v -json > testIntegration.log
+
+      - name: Run e2e tests
+        continue-on-error: true
+        run: |
+          cd backend/src/tests/e2e_test && go test . -v -json > testE2e.log
+
+      - name: Upload unit-service test logs
         uses: actions/upload-artifact@v4
+        continue-on-error: true
         with:
           name: testService
           path: backend/src/tests/service_test/testService.log
+          retention-days: 7
+
+      - name: Upload unit-repository test logs
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: testRepository
+          path: backend/src/tests/service_test/testRepository.log
+          retention-days: 7
+
+      - name: Upload integration test logs
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: testIntegration
+          path: backend/src/tests/service_test/testIntegration.log
+          retention-days: 7
+
+      - name: Upload e2e test logs
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: testService
+          path: backend/src/tests/service_test/testE2e.log
           retention-days: 7
 
   make-report:
     needs: run-unit-tests
     name: Make report
     runs-on: ubuntu-latest
-    container:
-      #      image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
-      image: zhukovskiy/bmstu-testing
-        #      options: --privileged
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Download test service log
+      - name: Download unit-service test log
         uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
           name: testService
-#      - shell: bash
+      - name: Download unit-repository test log
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: testRepository
+      - name: Download integration test log
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: testIntegration
+      - name: Download e2e test log
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: testE2e
       - name: Make report
         run: |
           ls
@@ -98,6 +131,9 @@ jobs:
           go install github.com/vakenbolt/go-test-report/
           touch test.log
           cat ../testService.log >> test.log || true
+          cat ../testRepository.log >> test.log || true
+          cat ../testIntegration.log >> test.log || true
+          cat ../testE2e.log >> test.log || true
           cat test.log | go-test-report -o report.html
 
       - name: Upload report
