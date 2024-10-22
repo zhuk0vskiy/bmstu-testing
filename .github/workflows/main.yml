@@ -65,7 +65,7 @@ jobs:
       - name: Run e2e tests
         continue-on-error: true
         run: |
-          cd backend/src/tests/e2e_test && go test . -v -json > testE2e.log
+          cd backend/src/tests/e2e_tests && go test . -v -json > testE2e.log
 
       - name: Upload unit-service test logs
         uses: actions/upload-artifact@v4
@@ -96,7 +96,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: testE2e
-          path: backend/src/tests/old_e2e_test/testE2e.log
+          path: backend/src/tests/e2e_tests/testE2e.log
           retention-days: 7
 
   make-report:
