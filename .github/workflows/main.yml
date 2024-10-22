@@ -38,13 +38,13 @@ jobs:
 #    needs: build-and-push-image
     name: Run unit tests
     runs-on: ubuntu-latest
-    container:
-#      image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
-      image: zhukovskiy/bmstu-testing
-#      options: --privileged
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.22.0'
       - name: Init config
         run: |
           mkdir -p /github/home/.docker
