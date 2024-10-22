@@ -104,6 +104,8 @@ jobs:
     name: Make report
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
       - name: Download unit-service test log
         uses: actions/download-artifact@v4
         continue-on-error: true
