@@ -68,7 +68,7 @@ jobs:
 
       - name: Set up for e2e tests
         run: |
-          docker run -p 5438:5432 -e POSTGRES_USER=studios -e POSTGRES_PASSWORD=studios -e POSTGRES_DB=studios -d postgres:14-alpine
+          docker run -p 5438:5432 -e POSTGRES_USER=studios -e POSTGRES_PASSWORD=studios -e POSTGRES_DB=studios -d postgres:13
 
       - name: Run e2e tests
         continue-on-error: true
