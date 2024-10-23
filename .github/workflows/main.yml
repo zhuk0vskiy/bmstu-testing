@@ -28,17 +28,17 @@ jobs:
       - name: Run unit-service tests
         run: |
           cd backend
-          go test ./... -tags=unit_test -v -json > testU.log
+          go test ./... -tags=unit_test -v -json > teststUnit.log
 
       - name: Run integration tests
         run: |
           cd backend
-          go test ./... -tags=integration_test -v -json > testIntegration.log
+          go test ./... -tags=integration_test -v -json > testsIntegration.log
 
       - name: Run e2e tests
         run: |
           cd backend
-          go test ./... -tags=e2e_test -v -json > testE2e.log
+          go test ./... -tags=e2e_test -v -json > testsE2e.log
 
       - name: Upload unit test logs
         uses: actions/upload-artifact@v4
