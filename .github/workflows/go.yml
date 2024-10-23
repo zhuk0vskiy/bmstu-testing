@@ -65,7 +65,7 @@ jobs:
           retention-days: 7
 
   make-report:
-    needs: run-unit-tests
+    needs: run-tests
     name: Make report
     runs-on: ubuntu-latest
     steps:
