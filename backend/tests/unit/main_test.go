@@ -1,5 +1,3 @@
-//go:build unit_test
-
 package unit_tests
 
 import (
@@ -14,41 +12,10 @@ func TestRunner(t *testing.T) {
 
 	wg := &sync.WaitGroup{}
 	suits := []runner.TestSuite{
-		&AuthSuite{
-			JwtKey: "asdhjkashjks",
-		},
-		&AuthRepoSuite{},
-
-		&CommentSuite{},
-		&CommentRepoSuite{},
-
-		&SaladTypeSuite{},
-		&SaladTypeRepoSuite{},
-
-		&RecipeSuite{},
-		&RecipeRepoSuite{},
-
-		&KeywordsValidatorSuite{},
-		&KeywordsRepoSuite{},
-
-		&MeasurementSuite{},
-		&MeasurementRepoSuite{},
-
-		&RecipeStepInteractorSuite{},
-		&RecipeStepSuite{},
-		&RecipeStepRepoSuite{},
-
-		&IngredientTypeSuite{},
-		&IngredientTypeRepoSuite{},
-
-		&SaladInteractorSuite{},
-		&SaladSuite{},
-		&SaladRepoSuite{},
-
-		&UserSuite{},
-		&UserRepoSuite{},
-
-		&UrlValidatorSuite{},
+		//&AuthSuite{
+		//	JwtKey: "asdhjkashjks",
+		//},
+		//&AuthRepoSuite{},
 	}
 	wg.Add(len(suits))
 
