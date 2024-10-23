@@ -108,7 +108,6 @@ jobs:
           cat testUnit.log >> test.log || true
           cat testIntegration.log >> test.log || true
           cat testE2e.log >> test.log || true
-          cat test.log | go-test-report -o reportTests.html
 
       - name: Upload report
         uses: actions/upload-artifact@v4
