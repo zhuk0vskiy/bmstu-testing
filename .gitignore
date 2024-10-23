@@ -1,18 +1,5 @@
-c*.aux
-*.bcf
-*.blg
-*.log
-*.out
-*.run
-*.xml
-*.run.xml
-*.tox
-*.gz
-*.dvi
-*.toc
-
-# If you prefer the allow list template instead of the deny list, see community>
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.g>
+# If you prefer the allow list template instead of the deny list, see community template:
+# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
 #
 # Binaries for programs and plugins
 *.exe
@@ -20,8 +7,6 @@ c*.aux
 *.dll
 *.so
 *.dylib
-
-
 
 # Test binary, built with `go test -c`
 *.test
@@ -34,10 +19,12 @@ c*.aux
 
 # Go workspace file
 go.work
+go.work.sum
 
+# env file
+.env
+
+.idea/
+allure-results
+allure-reports
 .DS_Store
-*.dtmp
-*.bkp
-*.drawio
-/.idea/
-

@@ -1,0 +1,21 @@
+app:
+  name: 'course_project'
+  version: 'v0.1'
+
+logger:
+  level: 'info'
+  file: 'logs.log'
+
+http:
+  port: 8081
+
+database:
+  driver: 'postgres'
+  host: 'localhost'
+  port: 5432
+  user: 'user'
+  password: 'pass'
+  dbname: 'salads'
+
+jwt:
+  key: 'dasnj34912vmck4'
