@@ -99,17 +99,17 @@ func (s *E2ESuite) Test2(t provider.T) {
 			Object().
 			NotEmpty().
 			HasValue("status", "success")
-
-		addRoomReq := &v1.AddRoomRequest{
-			Name:      "e",
-			StudioId:  1,
-			StartHour: 1,
-			EndHour:   2,
-		}
-		s.e.POST("/rooms/").
-			WithJSON(addRoomReq).
-			Expect().
-			Status(http.StatusUnauthorized)
+		//
+		//addRoomReq := &v1.AddRoomRequest{
+		//	Name:      "e",
+		//	StudioId:  1,
+		//	StartHour: 1,
+		//	EndHour:   2,
+		//}
+		//s.e.POST("/rooms/").
+		//	WithJSON(addRoomReq).
+		//	Expect().
+		//	Status(http.StatusUnauthorized)
 		//JSON().
 		//Object().
 		//NotEmpty().

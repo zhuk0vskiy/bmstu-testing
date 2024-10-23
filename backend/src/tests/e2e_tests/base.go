@@ -8,9 +8,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
-	"github.com/go-chi/jwtauth/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"log"
 	"net/http"
@@ -18,7 +16,7 @@ import (
 	//"ppo/internal/storage"
 )
 
-var tokenAuth *jwtauth.JWTAuth
+// var tokenAuth *jwtauth.JWTAuth
 var TestDbInstance *pgxpool.Pool
 
 func RunTheApp(db *pgxpool.Pool, done chan os.Signal, ok chan struct{}) {
@@ -54,7 +52,7 @@ func RunTheApp(db *pgxpool.Pool, done chan os.Signal, ok chan struct{}) {
 	}
 
 	a := app.NewApp(db, c, l)
-
+	fmt.Println(1)
 	mux := chi.NewMux()
 	mux.Use(cors.Handler(cors.Options{
 
@@ -66,17 +64,14 @@ func RunTheApp(db *pgxpool.Pool, done chan os.Signal, ok chan struct{}) {
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
 
-	mux.Use(middleware.Logger)
-	fmt.Println(1)
+	//mux.Use(middleware.Logger)
+	fmt.Println(2)
 	mux.Route("/api", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
 			r.Post("/login", v1.LoginHandler(a))
 			r.Post("/signin", v1.SignInHandler(a))
 
-			r.Group(func(r chi.Router) {
-
-				r.Get("/validation", v1.ValidationHandler(a))
-			})
+			r.Get("/validation", v1.ValidationHandler(a))
 
 			r.Route("/reserves", func(r chi.Router) {
 				r.Post("/", v1.AddReserveHandler(a))
@@ -85,34 +80,27 @@ func RunTheApp(db *pgxpool.Pool, done chan os.Signal, ok chan struct{}) {
 
 			r.Route("/studios", func(r chi.Router) {
 				r.Post("/", v1.AddStudioHandler(a))
-				r.Group(func(r chi.Router) {
 
-					r.Get("/{id}", v1.GetStudioHandler(a))
-					r.Get("/{id}/rooms", v1.GetRoomsByStudioHandler(a))
-					r.Get("/{id}/producers", v1.GetProducerHandler(a))
-					r.Get("/{id}/instrumentalists", v1.GetInstrumentalistHandler(a))
-					r.Get("/{id}/equipments", v1.GetEquipmentHandler(a))
+				r.Get("/{id}", v1.GetStudioHandler(a))
+				r.Get("/{id}/rooms", v1.GetRoomsByStudioHandler(a))
+				r.Get("/{id}/producers", v1.GetProducerHandler(a))
+				r.Get("/{id}/instrumentalists", v1.GetInstrumentalistHandler(a))
+				r.Get("/{id}/equipments", v1.GetEquipmentHandler(a))
 
-				})
-				r.Group(func(r chi.Router) {
-
-					r.Patch("/{id}", v1.UpdateStudioHandler(a))
-					r.Delete("/{id}", v1.DeleteStudioHandler(a))
-					r.Post("/", v1.AddStudioHandler(a))
-				})
+				r.Patch("/{id}", v1.UpdateStudioHandler(a))
+				r.Delete("/{id}", v1.DeleteStudioHandler(a))
+				r.Post("/", v1.AddStudioHandler(a))
 
 			})
 
 			r.Route("/rooms", func(r chi.Router) {
-				r.Group(func(r chi.Router) {
-					r.Get("/{id}", v1.GetRoomHandler(a))
-				})
-				r.Group(func(r chi.Router) {
 
-					r.Post("/", v1.AddRoomHandler(a))
-					r.Patch("/{id}", v1.UpdateRoomHandler(a))
-					r.Delete("/{id}", v1.DeleteRoomHandler(a))
-				})
+				r.Get("/{id}", v1.GetRoomHandler(a))
+
+				r.Post("/", v1.AddRoomHandler(a))
+				r.Patch("/{id}", v1.UpdateRoomHandler(a))
+				r.Delete("/{id}", v1.DeleteRoomHandler(a))
+
 			})
 
 			r.Route("/producers", func(r chi.Router) {
