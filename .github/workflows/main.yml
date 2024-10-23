@@ -44,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: testService
+          name: testUnit
           path: backend/testUnit.log
           retention-days: 7
 
@@ -81,17 +81,11 @@ jobs:
         run:
           cd backend && go mod tidy
 
-      - name: Download unit-service test log
+      - name: Download unit test log
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
-          name: testService
-
-      - name: Download unit-repository test log
-        uses: actions/download-artifact@v4
-        continue-on-error: true
-        with:
-          name: testRepository
+          name: testUnit
 
       - name: Download integration test log
         uses: actions/download-artifact@v4
