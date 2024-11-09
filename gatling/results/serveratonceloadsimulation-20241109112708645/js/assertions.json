@@ -1,0 +1,10 @@
+{
+  "simulation": "ServerAtOnceLoadSimulation",
+  "simulationId": "serveratonceloadsimulation",
+  "start": 1731151628645,
+  "description": "",
+  "scenarios": ["Echo Server Load Test", "FastHTTP Server Load Test"],
+  "assertions": [
+
+  ]
+}
